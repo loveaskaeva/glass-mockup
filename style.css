@@ -267,22 +267,28 @@ p { margin: 0; }
 .works__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 2.4vw, 32px); }
 .ba { margin: 0; }
 .ba--wide { grid-column: 1 / -1; }
-/* заглушка под фото работы */
-.shot {
-  position: relative; display: grid; grid-template-columns: 1fr 1fr; aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden;
-  background: rgba(255, 253, 248, .55); border: 1px dashed rgba(154, 117, 54, .5);
+/* ползунок до/после; пока без фото: справа чистое стекло, слева мутное с царапинами */
+.ba__stage { position: relative; overflow: hidden; border-radius: 4px; aspect-ratio: 4 / 5; --pos: 50%; border: 1px solid var(--line); touch-action: pan-y; }
+.ba--wide .ba__stage { aspect-ratio: 16 / 9; }
+.ba__after { position: absolute; inset: 0; background: linear-gradient(125deg, #f6f3ec 0%, #fffdf8 38%, #e9eef0 62%, #fbfaf6 100%); }
+.ba__after::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.9) 48%, transparent 56%); }
+.ba__before { position: absolute; inset: 0; clip-path: inset(0 calc(100% - var(--pos)) 0 0); background: linear-gradient(125deg, #b9b6ae, #cfccc4 45%, #aeb3b4); }
+.ba__scr { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ba__tag { position: absolute; top: 14px; z-index: 2; padding: 5px 10px; border-radius: 999px; background: rgba(255,253,248,.85); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-2); pointer-events: none; }
+.ba__tag--l { left: 14px; }
+.ba__tag--r { right: 14px; }
+.ba__note {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 2; pointer-events: none;
+  padding: 7px 14px; border-radius: 999px; background: var(--ivory); border: 1px solid var(--line);
+  font: italic 500 16px/1 var(--serif); color: var(--gold); white-space: nowrap;
 }
-.ba--wide .shot { aspect-ratio: 16 / 9; }
-.shot__half {
-  display: flex; align-items: flex-start; padding: 16px 18px;
-  font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3);
-}
-.shot__half + .shot__half { justify-content: flex-end; border-left: 1px dashed rgba(154, 117, 54, .45); background: rgba(255, 253, 248, .45); }
-.shot__note {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  padding: 8px 16px; border-radius: 999px; background: var(--ivory); border: 1px solid var(--line);
-  font: italic 500 18px/1 var(--serif); color: var(--gold); white-space: nowrap;
-}
+.ba__handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--ivory); z-index: 2; pointer-events: none; box-shadow: 0 0 12px rgba(0,0,0,.3); }
+.ba__handle i { position: absolute; top: 50%; left: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: var(--ivory); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+.ba__handle i::before, .ba__handle i::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -4px; border: solid var(--ink); border-width: 0 0 1.5px 1.5px; }
+.ba__handle i::before { left: 14px; transform: rotate(45deg); }
+.ba__handle i::after { right: 14px; transform: rotate(-135deg); }
+.ba__range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; }
+.ba__stage:has(.ba__range:focus-visible) .ba__handle i { outline: 2px solid var(--gold); outline-offset: 3px; }
 .ba figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; padding-top: 16px; font-size: 14px; color: var(--ink-3); }
 .ba figcaption b { font: 500 21px/1.2 var(--serif); color: var(--ink); }
 
@@ -337,6 +343,7 @@ p { margin: 0; }
 
 /* ===== адаптив ===== */
 @media (max-width: 960px) {
+  .ba--wide .ba__stage { aspect-ratio: 4 / 3; }
   .hero { grid-template-columns: 1fr; padding-top: 110px; min-height: 0; }
   .hero__art { max-width: 460px; width: 100%; justify-self: center; }
   .hint { display: none; }

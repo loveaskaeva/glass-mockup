@@ -41,15 +41,15 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="hero__text">
-    <p class="eyebrow" data-reveal>Мастерская стекла · <span class="ph">[город]</span></p>
+    <p class="eyebrow" data-reveal>Мастерская стекла · Санкт-Петербург</p>
     <h1 data-reveal="unveil">Возвращаем стеклу <em>зеркальную гладь</em></h1>
-    <p class="lead" data-reveal>Убираем царапины, потёртости и помутнения с окон, витрин, столешниц и кромок. Шлифуем, полируем и проверяем под боковым светом, пока стекло снова не станет невидимым.</p>
+    <p class="lead" data-reveal>Убираем царапины, потёртости и помутнения с окон, витрин, автомобильных стёкол и столешниц. Шлифуем, полируем и проверяем под боковым светом, пока стекло снова не станет невидимым.</p>
     <div class="cta" data-reveal>
       <a class="btn" href="https://t.me/your_username" target="_blank" rel="noopener">Написать в Telegram</a>
       <a class="link" href="#raboty">Смотреть работы <span aria-hidden="true">→</span></a>
     </div>
     <dl class="facts" data-reveal>
-      <div><dt class="ph">[12]</dt><dd>лет работы</dd></div>
+      <div><dt class="ph">[фраза]</dt><dd class="ph">[подпись]</dd></div>
       <div><dt class="ph">[800+]</dt><dd>поверхностей</dd></div>
       <div><dt class="ph">[1 день]</dt><dd>типичный срок</dd></div>
     </dl>
@@ -89,7 +89,7 @@
 <section class="services" id="uslugi">
   <header class="sec-head">
     <p class="eyebrow" data-reveal>Что мы делаем</p>
-    <h2 data-reveal="unveil">Ремесло в&nbsp;пяти действиях</h2>
+    <h2 data-reveal="unveil">Ремесло в&nbsp;четырёх действиях</h2>
   </header>
   <ol class="rows">
     <li class="row" data-reveal>
@@ -99,26 +99,21 @@
     </li>
     <li class="row" data-reveal>
       <span class="row__n">II</span>
-      <div class="row__body"><h3>Полировка кромки и торцов</h3><p>Скол на углу, шершавая грань после резки, матовый торец. Возвращаем аккуратную блестящую кромку.</p></div>
-      <span class="row__price ph">от [000] ₽/пог. м</span>
-    </li>
-    <li class="row" data-reveal>
-      <span class="row__n">III</span>
       <div class="row__body"><h3>Шлифовка и матирование</h3><p>Ровная однородная матовая поверхность по заданному рисунку. Для дверей, перегородок, декоративных панелей.</p></div>
       <span class="row__price ph">от [000] ₽/м²</span>
     </li>
     <li class="row" data-reveal>
-      <span class="row__n">IV</span>
+      <span class="row__n">III</span>
       <div class="row__body"><h3>Столешницы и мебель из стекла</h3><p>Стеклянные столы, полки, витрины. Работаем на месте или забираем в мастерскую.</p></div>
       <span class="row__price ph">от [000] ₽</span>
     </li>
     <li class="row" data-reveal>
-      <span class="row__n">V</span>
-      <div class="row__body"><h3>Восстановление после налёта</h3><p>Известковый налёт, «радужные» разводы, коррозия стекла на старых окнах и душевых кабинах.</p></div>
+      <span class="row__n">IV</span>
+      <div class="row__body"><h3>Восстановление после налёта</h3><p>Известковый налёт, водный камень, «радужные» разводы, коррозия стекла на старых окнах и душевых кабинах.</p></div>
       <span class="row__price ph">от [000] ₽/м²</span>
     </li>
   </ol>
-  <p class="note" data-reveal>Список услуг и цены — заглушки, заказчик уточнит.</p>
+  <p class="note" data-reveal>Цены — заглушки, заказчик уточнит.</p>
 </section>
 
 <!-- ============ ПРОЦЕСС ============ -->
@@ -161,23 +156,44 @@
   <header class="sec-head">
     <p class="eyebrow" data-reveal>Примеры работ</p>
     <h2 data-reveal="unveil">До и&nbsp;после</h2>
-    <p class="sec-sub" data-reveal>Здесь появятся фотографии реальных работ: снимок до и снимок после.</p>
+    <p class="sec-sub" data-reveal>Здесь появятся фотографии реальных работ. Потяните ползунок, чтобы сравнить «до» и «после».</p>
   </header>
 
   <div class="works__grid">
-    <figure class="ba ba--wide" data-reveal>
-      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
-      <figcaption><b class="ph">[Витрина магазина]</b><span>Убрали паутину царапин от чистки · <span class="ph">[1 день]</span></span></figcaption>
+    <figure class="ba ba--wide" data-reveal data-ba>
+      <div class="ba__stage">
+        <div class="ba__after"></div>
+        <div class="ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
+        <span class="ba__note">Фото работы</span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
+        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: стеклопакет">
+      </div>
+      <figcaption><b>Стеклопакет</b><span><span class="ph">[что сделали]</span> · <span class="ph">[срок]</span></span></figcaption>
     </figure>
 
-    <figure class="ba" data-reveal>
-      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
-      <figcaption><b class="ph">[Стеклянная столешница]</b><span>Шлифовка и полировка по всей площади · <span class="ph">[2 дня]</span></span></figcaption>
+    <figure class="ba" data-reveal data-ba>
+      <div class="ba__stage">
+        <div class="ba__after"></div>
+        <div class="ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
+        <span class="ba__note">Фото работы</span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
+        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: лобовое стекло автомобиля">
+      </div>
+      <figcaption><b>Лобовое стекло автомобиля</b><span><span class="ph">[что сделали]</span> · <span class="ph">[срок]</span></span></figcaption>
     </figure>
 
-    <figure class="ba" data-reveal>
-      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
-      <figcaption><b class="ph">[Окно в доме]</b><span>Удалили следы песка и известковые разводы · <span class="ph">[1 день]</span></span></figcaption>
+    <figure class="ba" data-reveal data-ba>
+      <div class="ba__stage">
+        <div class="ba__after"></div>
+        <div class="ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
+        <span class="ba__note">Фото работы</span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
+        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: боковое стекло автомобиля">
+      </div>
+      <figcaption><b>Боковое стекло автомобиля</b><span><span class="ph">[что сделали]</span> · <span class="ph">[срок]</span></span></figcaption>
     </figure>
   </div>
 </section>
@@ -193,7 +209,7 @@
     <li data-reveal><span class="big ph">2–5 дней</span><p>Витрины, перегородки и крупные объекты, где работаем в несколько этапов.</p></li>
     <li data-reveal><span class="big ph">в тот же день</span><p>Выезд на замер и оценка стоимости. Условия выезда уточняются.</p></li>
   </ul>
-  <p class="note" data-reveal>Время работы: <span class="ph">пн–сб, 9:00–19:00</span> · Гарантия: <span class="ph">[срок]</span></p>
+  <p class="note" data-reveal>Время работы: <span class="ph">[дни]</span> 8:00–20:00 · Гарантия: <span class="ph">[срок]</span></p>
 </section>
 
 <!-- ============ КОНТАКТЫ ============ -->
@@ -210,7 +226,7 @@
       <li><a href="tel:+70000000000"><span>Телефон</span><b class="ph">+7 (000) 000-00-00</b></a></li>
       <li><a href="mailto:hello@example.com"><span>Почта</span><b class="ph">hello@example.com</b></a></li>
       <li><a href="https://wa.me/70000000000" target="_blank" rel="noopener"><span>WhatsApp</span><b class="ph">+7 (000) 000-00-00</b></a></li>
-      <li class="contact__addr"><span>Мастерская</span><b class="ph">[город, улица, дом]</b></li>
+      <li class="contact__addr"><span>Город</span><b>Санкт-Петербург</b></li>
     </ul>
   </div>
 </section>
@@ -226,7 +242,7 @@
   <p class="credits">Фото: Unsplash (Unsplash License); текстуры мрамора: ambientCG (CC0). Все изображения временные.</p>
 </footer>
 
-<div class="mock-tag" id="mockTag">Макет · версия 4 <button type="button" aria-label="Скрыть метку">×</button></div>
+<div class="mock-tag" id="mockTag">Макет · версия 5 <button type="button" aria-label="Скрыть метку">×</button></div>
 
 <script src="main.js"></script>
 </body>

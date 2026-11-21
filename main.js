@@ -30,6 +30,7 @@
   if (heroScr) scratches(heroScr, 46, 12345, 400, 520);
   const benchScr = $('#benchScr');
   if (benchScr) scratches(benchScr, 70, 4242, 400, 500);
+  $$('.ba__scr').forEach((s, i) => scratches(s, 38 + i * 6, 777 + i * 91, 400, 260));
 
   /* ---------- появление при прокрутке ---------- */
   const revealEls = $$('[data-reveal]');
@@ -185,6 +186,30 @@
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   frame();
+
+  /* ---------- ползунок «до / после» ---------- */
+  $$('[data-ba]').forEach((fig) => {
+    const stage = $('.ba__stage', fig);
+    const range = $('.ba__range', fig);
+    const set = (v) => stage.style.setProperty('--pos', v + '%');
+    range.addEventListener('input', () => set(range.value));
+    set(range.value);
+    if (reduce || !('IntersectionObserver' in window)) return;
+    // один раз показываем, что ползунок двигается
+    const hint = new IntersectionObserver((es) => {
+      if (!es[0].isIntersecting) return;
+      hint.disconnect();
+      const t0 = performance.now();
+      const run = (t) => {
+        const k = clamp((t - t0) / 1800);
+        const v = 50 + Math.sin(k * Math.PI * 2) * 28 * (1 - k * 0.2);
+        if (document.activeElement !== range) { set(v.toFixed(1)); range.value = v; }
+        if (k < 1) requestAnimationFrame(run); else { set(50); range.value = 50; }
+      };
+      setTimeout(() => requestAnimationFrame(run), 500);
+    }, { threshold: 0.6 });
+    hint.observe(fig);
+  });
 
   /* ---------- метка «макет» ---------- */
   const tag = $('#mockTag');
