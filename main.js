@@ -28,7 +28,8 @@
 
   const heroScr = $('#scratches');
   if (heroScr) scratches(heroScr, 46, 12345, 400, 520);
-  $$('.ba__scr').forEach((s, i) => scratches(s, 38 + i * 6, 777 + i * 91, 400, 260));
+  const benchScr = $('#benchScr');
+  if (benchScr) scratches(benchScr, 70, 4242, 400, 500);
 
   /* ---------- появление при прокрутке ---------- */
   const revealEls = $$('[data-reveal]');
@@ -104,9 +105,54 @@
   }
 
   /* ---------- scroll-линк: общая функция ---------- */
-  const stepsEl = $('#steps');
-  const stepsLine = $('#stepsLine');
-  const bgEls = [['--bgy', 0.06, null], ['--bgy2', 0.04, '.myth'], ['--bgy3', 0.04, '.process'], ['--bgy4', 0.04, '.contact']];
+  /* ---------- «Как работаем»: экран закреплён, прокрутка ведёт анимацию ---------- */
+  const proc = $('#process');
+  const bench = $('#bench');
+  const stepEls = $$('#steps .step');
+  const phaseEl = $('#benchPhase');
+  const barEl = $('#benchBar');
+  const grind = $('.tool--grind', bench);
+  const polish = $('.tool--polish', bench);
+  const phaseNames = ['I · Осмотр', 'II · Шлифовка', 'III · Полировка', 'IV · Контроль'];
+  const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const tri = (x) => 1 - Math.abs(((x % 2) + 2) % 2 - 1);  // треугольная волна 0..1
+  let curPhase = -1;
+
+  function benchFrame(vh) {
+    const r = proc.getBoundingClientRect();
+    const span = r.height - vh;
+    if (span <= 0) return;
+    const P = clamp(-r.top / span) * 4;          // 0..4: четыре этапа
+    const s = bench.style;
+    // I. осмотр: боковой свет проходит по стеклу, царапины проявляются
+    s.setProperty('--light', (-40 + 150 * clamp(P / 0.9)).toFixed(1) + '%');
+    s.setProperty('--scr', ((0.3 + 0.7 * ss(0, 0.6, P)) * (1 - ss(1.1, 1.9, P))).toFixed(3));
+    // II. шлифовка: круг идёт змейкой, царапины уходят, стекло матовеет
+    const u1 = clamp(P - 1);
+    grind.style.opacity = (ss(0.88, 1.08, P) * (1 - ss(1.9, 2.05, P))).toFixed(3);
+    grind.style.setProperty('--tx', (24 + 52 * tri(u1 * 5)).toFixed(1) + '%');
+    grind.style.setProperty('--ty', (22 + 56 * u1).toFixed(1) + '%');
+    grind.style.setProperty('--rot', (P * 1100).toFixed(0) + 'deg');
+    // III. полировка: войлок ходит кругами, матовость уходит
+    const u2 = clamp(P - 2);
+    polish.style.opacity = (ss(1.95, 2.12, P) * (1 - ss(2.9, 3.05, P))).toFixed(3);
+    polish.style.setProperty('--tx', (50 + 24 * Math.sin(u2 * Math.PI * 6)).toFixed(1) + '%');
+    polish.style.setProperty('--ty', (26 + 48 * u2 + 9 * Math.cos(u2 * Math.PI * 6)).toFixed(1) + '%');
+    polish.style.setProperty('--rot', (P * 700).toFixed(0) + 'deg');
+    s.setProperty('--haze', (0.9 * ss(1.1, 1.85, P) * (1 - ss(2.08, 2.92, P))).toFixed(3));
+    // IV. контроль: блик по чистому стеклу и отметка
+    s.setProperty('--shine', (-60 + 200 * clamp((P - 3.02) / 0.6)).toFixed(1) + '%');
+    s.setProperty('--ok', ss(3.45, 3.75, P).toFixed(3));
+    barEl.style.setProperty('--bp', (P / 4).toFixed(4));
+
+    const ph = Math.min(3, Math.floor(P));
+    if (ph !== curPhase) {
+      curPhase = ph;
+      phaseEl.textContent = phaseNames[ph];
+      stepEls.forEach((el, i) => el.classList.toggle('is-on', i === ph));
+    }
+  }
+
   let ticking = false;
 
   function frame() {
@@ -133,42 +179,12 @@
     scrollP = clamp(y / (vh * 0.7));
     applyPane();
 
-    // линия процесса «рисуется»
-    if (stepsEl) {
-      const r = stepsEl.getBoundingClientRect();
-      const k = clamp((vh * 0.62 - r.top) / r.height);
-      stepsEl.style.setProperty('--line', k.toFixed(3));
-      stepsLine.style.setProperty('--line', k.toFixed(3));
-    }
+    if (proc && !reduce) benchFrame(vh);
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   frame();
-
-  /* ---------- до / после ---------- */
-  $$('[data-ba]').forEach((fig) => {
-    const stage = $('.ba__stage', fig);
-    const range = $('.ba__range', fig);
-    const set = (v) => stage.style.setProperty('--pos', v + '%');
-    range.addEventListener('input', () => set(range.value));
-    set(range.value);
-    if (reduce) return;
-    // один раз показываем, что ползунок двигается
-    const hint = new IntersectionObserver((es) => {
-      if (!es[0].isIntersecting) return;
-      hint.disconnect();
-      const t0 = performance.now();
-      const run = (t) => {
-        const k = clamp((t - t0) / 1800);
-        const v = 50 + Math.sin(k * Math.PI * 2) * 28 * (1 - k * 0.2);
-        if (document.activeElement !== range) { set(v.toFixed(1)); range.value = v; }
-        if (k < 1) requestAnimationFrame(run); else { set(50); range.value = 50; }
-      };
-      setTimeout(() => requestAnimationFrame(run), 500);
-    }, { threshold: 0.6 });
-    hint.observe(fig);
-  });
 
   /* ---------- метка «макет» ---------- */
   const tag = $('#mockTag');

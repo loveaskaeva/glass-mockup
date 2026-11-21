@@ -123,18 +123,35 @@
 
 <!-- ============ ПРОЦЕСС ============ -->
 <section class="process" id="process">
-  <img class="process__bg" src="img/columns.webp" alt="" aria-hidden="true" loading="lazy" width="1600" height="1067">
-  <div class="process__inner">
-    <header class="sec-head sec-head--light">
-      <p class="eyebrow eyebrow--gold" data-reveal>Как работаем</p>
-      <h2 data-reveal="unveil">Четыре шага от&nbsp;мутного стекла до&nbsp;прозрачного</h2>
-    </header>
-    <div class="steps" id="steps">
-      <svg class="steps__line" id="stepsLine" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 2 100"><path d="M1 0V100" pathLength="1"/></svg>
-      <article class="step" data-reveal><span class="step__n">I</span><div><h3>Осмотр и оценка</h3><p>Смотрим стекло при боковом свете, оцениваем глубину дефектов и честно говорим, что уйдёт совсем, а что станет менее заметным.</p></div></article>
-      <article class="step" data-reveal><span class="step__n">II</span><div><h3>Шлифовка</h3><p>Снимаем минимальный слой, переходя от крупного зерна к мелкому. Стекло остаётся ровным, без «линз» и искажений.</p></div></article>
-      <article class="step" data-reveal><span class="step__n">III</span><div><h3>Полировка</h3><p>Финиш войлочными кругами и оксидом церия. На этом шаге возвращается прозрачность.</p></div></article>
-      <article class="step" data-reveal><span class="step__n">IV</span><div><h3>Контроль</h3><p>Проверяем на просвет и в отражении. Сдаём работу, только когда не видно ни искажений, ни следов обработки.</p></div></article>
+  <div class="process__pin">
+    <div class="process__inner">
+      <div class="process__text">
+        <p class="eyebrow eyebrow--gold">Как работаем</p>
+        <h2>Четыре шага от&nbsp;мутного стекла до&nbsp;прозрачного</h2>
+        <ol class="steps" id="steps">
+          <li class="step is-on"><span class="step__n">I</span><div><h3>Осмотр</h3><p>Ведём боковой свет по стеклу: так видна каждая царапина. Оцениваем глубину и честно говорим, что уйдёт совсем.</p></div></li>
+          <li class="step"><span class="step__n">II</span><div><h3>Шлифовка</h3><p>Снимаем минимальный слой, от крупного зерна к мелкому. Царапины уходят, стекло на время становится матовым.</p></div></li>
+          <li class="step"><span class="step__n">III</span><div><h3>Полировка</h3><p>Войлочный круг и оксид церия возвращают прозрачность. Матовость уходит круг за кругом.</p></div></li>
+          <li class="step"><span class="step__n">IV</span><div><h3>Контроль</h3><p>Проверяем на просвет и в отражении. Сдаём, только когда не видно ни искажений, ни следов работы.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="bench" id="bench" aria-hidden="true">
+        <div class="bench__pane">
+          <img class="bench__view" src="img/columns.webp" alt="" loading="lazy" width="1600" height="1067">
+          <div class="bench__haze"></div>
+          <svg class="bench__scr" id="benchScr" viewBox="0 0 400 500" preserveAspectRatio="none"></svg>
+          <div class="bench__light"></div>
+          <div class="bench__shine"></div>
+          <div class="tool tool--grind"><i></i></div>
+          <div class="tool tool--polish"><i></i></div>
+          <div class="bench__ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Прозрачно</div>
+        </div>
+        <div class="bench__hud">
+          <span class="bench__phase" id="benchPhase">I · Осмотр</span>
+          <span class="bench__bar"><i id="benchBar"></i></span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -144,40 +161,22 @@
   <header class="sec-head">
     <p class="eyebrow" data-reveal>Примеры работ</p>
     <h2 data-reveal="unveil">До и&nbsp;после</h2>
-    <p class="sec-sub" data-reveal>Потяните ползунок. Сейчас здесь временные фотографии, позже их заменят снимки работ заказчика.</p>
+    <p class="sec-sub" data-reveal>Здесь появятся фотографии реальных работ: снимок до и снимок после.</p>
   </header>
 
   <div class="works__grid">
-    <figure class="ba ba--wide" data-reveal data-ba>
-      <div class="ba__stage">
-        <img class="ba__img" src="img/work1.webp" alt="Временное фото: античный храм на закате" loading="lazy" width="1600" height="900">
-        <div class="ba__before"><img class="ba__img" src="img/work1.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
-        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle" aria-hidden="true"><i></i></span>
-        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
-      </div>
+    <figure class="ba ba--wide" data-reveal>
+      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
       <figcaption><b class="ph">[Витрина магазина]</b><span>Убрали паутину царапин от чистки · <span class="ph">[1 день]</span></span></figcaption>
     </figure>
 
-    <figure class="ba" data-reveal data-ba>
-      <div class="ba__stage">
-        <img class="ba__img" src="img/work2.webp" alt="Временное фото: мраморный бюст" loading="lazy" width="900" height="1125">
-        <div class="ba__before"><img class="ba__img" src="img/work2.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
-        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle" aria-hidden="true"><i></i></span>
-        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
-      </div>
+    <figure class="ba" data-reveal>
+      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
       <figcaption><b class="ph">[Стеклянная столешница]</b><span>Шлифовка и полировка по всей площади · <span class="ph">[2 дня]</span></span></figcaption>
     </figure>
 
-    <figure class="ba" data-reveal data-ba>
-      <div class="ba__stage">
-        <img class="ba__img" src="img/work3.webp" alt="Временное фото: колонны на фоне неба" loading="lazy" width="900" height="1125">
-        <div class="ba__before"><img class="ba__img" src="img/work3.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
-        <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle" aria-hidden="true"><i></i></span>
-        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
-      </div>
+    <figure class="ba" data-reveal>
+      <div class="shot"><span class="shot__half">До</span><span class="shot__half">После</span><span class="shot__note">Фото работы</span></div>
       <figcaption><b class="ph">[Окно в доме]</b><span>Удалили следы песка и известковые разводы · <span class="ph">[1 день]</span></span></figcaption>
     </figure>
   </div>
@@ -227,7 +226,7 @@
   <p class="credits">Фото: Unsplash (Unsplash License); текстуры мрамора: ambientCG (CC0). Все изображения временные.</p>
 </footer>
 
-<div class="mock-tag" id="mockTag">Макет · версия 3 <button type="button" aria-label="Скрыть метку">×</button></div>
+<div class="mock-tag" id="mockTag">Макет · версия 4 <button type="button" aria-label="Скрыть метку">×</button></div>
 
 <script src="main.js"></script>
 </body>
