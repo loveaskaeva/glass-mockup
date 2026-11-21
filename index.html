@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Полировка и шлифовка стекла — макет</title>
 <meta name="description" content="Убираем царапины, помутнения и следы износа со стекла: шлифовка, полировка, реставрация. Макет сайта-визитки.">
-<meta name="theme-color" content="#f3f1ec">
+<meta name="theme-color" content="#f4f0e8">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Forum&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero.webp">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.classList.add('js')</script>
 </head>
@@ -20,14 +21,14 @@
 <header class="top" id="top">
   <a class="brand" href="#hero" aria-label="На главную">
     <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-      <path d="M4 7h24M6 10h20M9 10v14M14 10v14M18 10v14M23 10v14M6 27h20M4 24.5h24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/>
+      <path d="M4 7h24M6 10h20M9 10v14M14 10v14M18 10v14M23 10v14M6 27h20M4 24.5h24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/>
     </svg>
     <span class="brand__name ph">[ Название ]</span>
   </a>
   <nav class="nav" id="nav" aria-label="Разделы">
     <a href="#uslugi">Услуги</a>
     <a href="#process">Как работаем</a>
-    <a href="#raboty">Примеры работ</a>
+    <a href="#raboty">Работы</a>
     <a href="#sroki">Сроки</a>
     <a href="#kontakty">Контакты</a>
   </nav>
@@ -40,42 +41,30 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="hero">
   <div class="hero__text">
-    <p class="eyebrow" data-reveal>Полировка и шлифовка стекла · <span class="ph">[город]</span></p>
-    <h1 data-reveal="unveil">Возвращаем стеклу<br><em>зеркальную гладь</em></h1>
+    <p class="eyebrow" data-reveal>Мастерская стекла · <span class="ph">[город]</span></p>
+    <h1 data-reveal="unveil">Возвращаем стеклу <em>зеркальную гладь</em></h1>
     <p class="lead" data-reveal>Убираем царапины, потёртости и помутнения с окон, витрин, столешниц и кромок. Шлифуем, полируем и проверяем под боковым светом, пока стекло снова не станет невидимым.</p>
     <div class="cta" data-reveal>
       <a class="btn" href="https://t.me/your_username" target="_blank" rel="noopener">Написать в Telegram</a>
       <a class="link" href="#raboty">Смотреть работы <span aria-hidden="true">→</span></a>
     </div>
-    <p class="hint" data-reveal>Прокрутите вниз: стекло справа очистится само.</p>
+    <dl class="facts" data-reveal>
+      <div><dt class="ph">[12]</dt><dd>лет работы</dd></div>
+      <div><dt class="ph">[800+]</dt><dd>поверхностей</dd></div>
+      <div><dt class="ph">[1 день]</dt><dd>типичный срок</dd></div>
+    </dl>
   </div>
 
-  <div class="hero__art" id="heroArt" aria-hidden="true">
-    <svg class="column" viewBox="0 0 220 560" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <linearGradient id="shaft" x1="0" x2="1"><stop offset="0" stop-color="#0c2d3f"/><stop offset=".35" stop-color="#1c5169"/><stop offset=".7" stop-color="#143e52"/><stop offset="1" stop-color="#0a2635"/></linearGradient>
-      </defs>
-      <rect x="8" y="10" width="204" height="26" fill="#0e3144"/>
-      <rect x="22" y="36" width="176" height="14" fill="#14405a"/>
-      <path d="M44 50h132l-8 40H52z" fill="#0f3a50"/>
-      <rect x="40" y="90" width="140" height="440" fill="url(#shaft)"/>
-      <g stroke="#06202d" stroke-width="2" opacity=".55">
-        <path d="M62 90v440M84 90v440M106 90v440M128 90v440M150 90v440M172 90v440"/>
-      </g>
-      <g stroke="#6aa3b8" stroke-width="1.2" opacity=".28">
-        <path d="M73 90v440M95 90v440M117 90v440M139 90v440M161 90v440"/>
-      </g>
-      <rect x="22" y="530" width="176" height="14" fill="#14405a"/>
-      <rect x="8" y="544" width="204" height="16" fill="#0e3144"/>
-    </svg>
-    <div class="pane" id="pane">
-      <svg class="pane__scratches" id="scratches" viewBox="0 0 400 520" preserveAspectRatio="none"></svg>
-      <span class="pane__haze"></span>
-      <span class="pane__shine"></span>
-      <span class="pane__edge"></span>
+  <figure class="hero__art" id="heroArt">
+    <div class="arch" id="pane">
+      <img class="arch__img" src="img/hero.webp" alt="Мраморный женский портрет, античная скульптура" width="1100" height="1500">
+      <img class="arch__fog" src="img/hero.webp" alt="" aria-hidden="true" width="1100" height="1500">
+      <svg class="arch__scr" id="scratches" viewBox="0 0 400 520" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <span class="arch__shine" aria-hidden="true"></span>
     </div>
-    <p class="art-cap"><span>Щит Персея</span> — полированная поверхность, в которой можно увидеть всё</p>
-  </div>
+    <figcaption class="art-cap"><span>Мрамор и стекло</span> Обоим возвращает жизнь одно и то же: полировка</figcaption>
+    <p class="hint" aria-hidden="true">листайте — стекло очистится</p>
+  </figure>
 </section>
 
 <div class="meander" aria-hidden="true"></div>
@@ -83,13 +72,17 @@
 <!-- ============ МИФ ============ -->
 <section class="myth" id="mif">
   <div class="myth__inner">
-    <p class="myth__tag" data-reveal>Миф</p>
-    <blockquote data-reveal="unveil">
-      <p>Персей победил Медузу, потому что смотрел не на неё, а в&nbsp;отполированный щит.</p>
-    </blockquote>
-    <p class="myth__text" data-reveal>Гладкая поверхность видит больше, чем кажется. Мы относимся к стеклу так же: исправляем всё, что мешает ему быть чистым и ровным, от тонкой паутины царапин до глубоких следов от щёток и абразива.</p>
+    <figure class="myth__img" data-reveal>
+      <div class="arch arch--sm"><img src="img/myth.webp" alt="«Персей с головой Медузы», Антонио Канова, мрамор" loading="lazy" width="900" height="1200"></div>
+    </figure>
+    <div class="myth__text">
+      <p class="eyebrow eyebrow--gold" data-reveal>Миф о щите</p>
+      <blockquote data-reveal="unveil">
+        <p>Персей победил Медузу, потому что смотрел в&nbsp;поверхность, отполированную до&nbsp;зеркала.</p>
+      </blockquote>
+      <p class="myth__body" data-reveal>Гладкая поверхность видит больше, чем кажется. Мы относимся к стеклу так же: исправляем всё, что мешает ему быть чистым и ровным, от тонкой паутины царапин до глубоких следов от щёток и абразива.</p>
+    </div>
   </div>
-  <span class="myth__numeral" aria-hidden="true">Ι</span>
 </section>
 
 <!-- ============ УСЛУГИ ============ -->
@@ -101,73 +94,47 @@
   <ol class="rows">
     <li class="row" data-reveal>
       <span class="row__n">I</span>
-      <div class="row__body">
-        <h3>Удаление царапин</h3>
-        <p>Окна, витрины, перегородки, стеклянные двери. Убираем следы от чистки, песка, колец и ключей, не меняя стекло.</p>
-      </div>
+      <div class="row__body"><h3>Удаление царапин</h3><p>Окна, витрины, перегородки, стеклянные двери. Убираем следы от чистки, песка, колец и ключей, не меняя стекло.</p></div>
       <span class="row__price ph">от [000] ₽/м²</span>
     </li>
     <li class="row" data-reveal>
       <span class="row__n">II</span>
-      <div class="row__body">
-        <h3>Полировка кромки и торцов</h3>
-        <p>Скол на углу, шершавая грань после резки, матовый торец. Возвращаем аккуратную блестящую кромку.</p>
-      </div>
+      <div class="row__body"><h3>Полировка кромки и торцов</h3><p>Скол на углу, шершавая грань после резки, матовый торец. Возвращаем аккуратную блестящую кромку.</p></div>
       <span class="row__price ph">от [000] ₽/пог. м</span>
     </li>
     <li class="row" data-reveal>
       <span class="row__n">III</span>
-      <div class="row__body">
-        <h3>Шлифовка и матирование</h3>
-        <p>Ровная однородная матовая поверхность по заданному рисунку. Подойдёт для дверей, перегородок, декоративных панелей.</p>
-      </div>
+      <div class="row__body"><h3>Шлифовка и матирование</h3><p>Ровная однородная матовая поверхность по заданному рисунку. Для дверей, перегородок, декоративных панелей.</p></div>
       <span class="row__price ph">от [000] ₽/м²</span>
     </li>
     <li class="row" data-reveal>
       <span class="row__n">IV</span>
-      <div class="row__body">
-        <h3>Столешницы и мебель из стекла</h3>
-        <p>Стеклянные столы, полки, витрины в помещении. Работаем на месте или забираем в мастерскую.</p>
-      </div>
+      <div class="row__body"><h3>Столешницы и мебель из стекла</h3><p>Стеклянные столы, полки, витрины. Работаем на месте или забираем в мастерскую.</p></div>
       <span class="row__price ph">от [000] ₽</span>
     </li>
     <li class="row" data-reveal>
       <span class="row__n">V</span>
-      <div class="row__body">
-        <h3>Восстановление после загрязнений</h3>
-        <p>Известковый налёт, «радужные» разводы, коррозия стекла на старых окнах и душевых кабинах.</p>
-      </div>
+      <div class="row__body"><h3>Восстановление после налёта</h3><p>Известковый налёт, «радужные» разводы, коррозия стекла на старых окнах и душевых кабинах.</p></div>
       <span class="row__price ph">от [000] ₽/м²</span>
     </li>
   </ol>
-  <p class="note ph" data-reveal>Список услуг и цены — заглушки. Заказчик уточнит, что оставить.</p>
+  <p class="note" data-reveal>Список услуг и цены — заглушки, заказчик уточнит.</p>
 </section>
 
 <!-- ============ ПРОЦЕСС ============ -->
 <section class="process" id="process">
+  <img class="process__bg" src="img/columns.webp" alt="" aria-hidden="true" loading="lazy" width="1600" height="1067">
   <div class="process__inner">
     <header class="sec-head sec-head--light">
-      <p class="eyebrow" data-reveal>Как работаем</p>
+      <p class="eyebrow eyebrow--gold" data-reveal>Как работаем</p>
       <h2 data-reveal="unveil">Четыре шага от&nbsp;мутного стекла до&nbsp;прозрачного</h2>
     </header>
     <div class="steps" id="steps">
       <svg class="steps__line" id="stepsLine" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 2 100"><path d="M1 0V100" pathLength="1"/></svg>
-      <article class="step" data-reveal>
-        <span class="step__n">I</span>
-        <div><h3>Осмотр и оценка</h3><p>Смотрим стекло при боковом свете, измеряем глубину дефектов и называем честный результат: что уйдёт совсем, а что станет менее заметным.</p></div>
-      </article>
-      <article class="step" data-reveal>
-        <span class="step__n">II</span>
-        <div><h3>Шлифовка</h3><p>Снимаем минимальный слой абразивом, переходя от крупного зерна к мелкому. Стекло остаётся ровным, без «линз» и искажений.</p></div>
-      </article>
-      <article class="step" data-reveal>
-        <span class="step__n">III</span>
-        <div><h3>Полировка</h3><p>Финишная обработка полировальными кругами и оксидом церия. На этом шаге возвращается прозрачность.</p></div>
-      </article>
-      <article class="step" data-reveal>
-        <span class="step__n">IV</span>
-        <div><h3>Контроль</h3><p>Проверяем стекло на просвет и в отражении. Сдаём работу, только когда нет искажений и следов обработки.</p></div>
-      </article>
+      <article class="step" data-reveal><span class="step__n">I</span><div><h3>Осмотр и оценка</h3><p>Смотрим стекло при боковом свете, оцениваем глубину дефектов и честно говорим, что уйдёт совсем, а что станет менее заметным.</p></div></article>
+      <article class="step" data-reveal><span class="step__n">II</span><div><h3>Шлифовка</h3><p>Снимаем минимальный слой, переходя от крупного зерна к мелкому. Стекло остаётся ровным, без «линз» и искажений.</p></div></article>
+      <article class="step" data-reveal><span class="step__n">III</span><div><h3>Полировка</h3><p>Финиш войлочными кругами и оксидом церия. На этом шаге возвращается прозрачность.</p></div></article>
+      <article class="step" data-reveal><span class="step__n">IV</span><div><h3>Контроль</h3><p>Проверяем на просвет и в отражении. Сдаём работу, только когда не видно ни искажений, ни следов обработки.</p></div></article>
     </div>
   </div>
 </section>
@@ -177,41 +144,41 @@
   <header class="sec-head">
     <p class="eyebrow" data-reveal>Примеры работ</p>
     <h2 data-reveal="unveil">До и&nbsp;после</h2>
-    <p class="sec-sub" data-reveal>Потяните ползунок. Здесь пока заглушки, позже будут настоящие фотографии заказчика.</p>
+    <p class="sec-sub" data-reveal>Потяните ползунок. Сейчас здесь временные фотографии, позже их заменят снимки работ заказчика.</p>
   </header>
 
   <div class="works__grid">
     <figure class="ba ba--wide" data-reveal data-ba>
-      <div class="ba__stage" data-scene="window">
-        <div class="ba__layer ba__after"><span class="ba__ph">фото-заглушка</span></div>
-        <div class="ba__layer ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none"></svg><span class="ba__ph">фото-заглушка</span></div>
+      <div class="ba__stage">
+        <img class="ba__img" src="img/work1.webp" alt="Временное фото: античный храм на закате" loading="lazy" width="1600" height="900">
+        <div class="ba__before"><img class="ba__img" src="img/work1.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
         <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle"><i></i></span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
         <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
       </div>
-      <figcaption><b class="ph">[Витрина магазина]</b> <span>Убрали паутину царапин от чистки. Срок: <span class="ph">[1 день]</span></span></figcaption>
+      <figcaption><b class="ph">[Витрина магазина]</b><span>Убрали паутину царапин от чистки · <span class="ph">[1 день]</span></span></figcaption>
     </figure>
 
     <figure class="ba" data-reveal data-ba>
-      <div class="ba__stage" data-scene="table">
-        <div class="ba__layer ba__after"><span class="ba__ph">фото-заглушка</span></div>
-        <div class="ba__layer ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none"></svg><span class="ba__ph">фото-заглушка</span></div>
+      <div class="ba__stage">
+        <img class="ba__img" src="img/work2.webp" alt="Временное фото: мраморный бюст" loading="lazy" width="900" height="1125">
+        <div class="ba__before"><img class="ba__img" src="img/work2.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
         <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle"><i></i></span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
         <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
       </div>
-      <figcaption><b class="ph">[Стеклянная столешница]</b> <span>Шлифовка и полировка по всей площади. Срок: <span class="ph">[2 дня]</span></span></figcaption>
+      <figcaption><b class="ph">[Стеклянная столешница]</b><span>Шлифовка и полировка по всей площади · <span class="ph">[2 дня]</span></span></figcaption>
     </figure>
 
     <figure class="ba" data-reveal data-ba>
-      <div class="ba__stage" data-scene="edge">
-        <div class="ba__layer ba__after"><span class="ba__ph">фото-заглушка</span></div>
-        <div class="ba__layer ba__before"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none"></svg><span class="ba__ph">фото-заглушка</span></div>
+      <div class="ba__stage">
+        <img class="ba__img" src="img/work3.webp" alt="Временное фото: колонны на фоне неба" loading="lazy" width="900" height="1125">
+        <div class="ba__before"><img class="ba__img" src="img/work3.webp" alt="" loading="lazy"><svg class="ba__scr" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true"></svg></div>
         <span class="ba__tag ba__tag--l">До</span><span class="ba__tag ba__tag--r">После</span>
-        <span class="ba__handle"><i></i></span>
+        <span class="ba__handle" aria-hidden="true"><i></i></span>
         <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после">
       </div>
-      <figcaption><b class="ph">[Окно в доме]</b> <span>Удалили следы песка и известковые разводы. Срок: <span class="ph">[1 день]</span></span></figcaption>
+      <figcaption><b class="ph">[Окно в доме]</b><span>Удалили следы песка и известковые разводы · <span class="ph">[1 день]</span></span></figcaption>
     </figure>
   </div>
 </section>
@@ -225,23 +192,26 @@
   <ul class="terms__list">
     <li data-reveal><span class="big ph">от 1 дня</span><p>Одна поверхность: окно, дверь, столешница. Зависит от глубины царапин.</p></li>
     <li data-reveal><span class="big ph">2–5 дней</span><p>Витрины, перегородки и крупные объекты, где работаем в несколько этапов.</p></li>
-    <li data-reveal><span class="big ph">в тот же день</span><p>Выезд на замер и оценка стоимости. Условия выезда заказчик уточнит.</p></li>
+    <li data-reveal><span class="big ph">в тот же день</span><p>Выезд на замер и оценка стоимости. Условия выезда уточняются.</p></li>
   </ul>
-  <p class="note" data-reveal>Время работы: <span class="ph">пн–сб, 9:00–19:00</span> · Гарантия на работу: <span class="ph">[срок]</span></p>
+  <p class="note" data-reveal>Время работы: <span class="ph">пн–сб, 9:00–19:00</span> · Гарантия: <span class="ph">[срок]</span></p>
 </section>
 
 <!-- ============ КОНТАКТЫ ============ -->
 <section class="contact" id="kontakty">
   <div class="contact__inner">
-    <p class="eyebrow eyebrow--light" data-reveal>Связаться с нами</p>
-    <h2 data-reveal="unveil">Расскажите о&nbsp;вашем стекле</h2>
-    <p class="contact__lead" data-reveal>Пришлите фото и размеры. Скажем, что можно сделать и сколько это будет стоить.</p>
+    <div class="contact__head">
+      <p class="eyebrow eyebrow--gold" data-reveal>Связаться с нами</p>
+      <h2 data-reveal="unveil">Расскажите о&nbsp;вашем стекле</h2>
+      <p class="contact__lead" data-reveal>Пришлите фото и размеры. Скажем, что можно сделать и сколько это будет стоить.</p>
+      <a class="btn btn--gold" href="https://t.me/your_username" target="_blank" rel="noopener" data-reveal>Написать в Telegram</a>
+    </div>
     <ul class="contact__list" data-reveal>
       <li><a href="https://t.me/your_username" target="_blank" rel="noopener"><span>Telegram</span><b class="ph">@your_username</b></a></li>
       <li><a href="tel:+70000000000"><span>Телефон</span><b class="ph">+7 (000) 000-00-00</b></a></li>
       <li><a href="mailto:hello@example.com"><span>Почта</span><b class="ph">hello@example.com</b></a></li>
       <li><a href="https://wa.me/70000000000" target="_blank" rel="noopener"><span>WhatsApp</span><b class="ph">+7 (000) 000-00-00</b></a></li>
-      <li class="contact__addr"><span>Адрес мастерской</span><b class="ph">[город, улица, дом]</b></li>
+      <li class="contact__addr"><span>Мастерская</span><b class="ph">[город, улица, дом]</b></li>
     </ul>
   </div>
 </section>
@@ -249,15 +219,15 @@
 </main>
 
 <footer class="foot">
-  <div class="meander meander--light" aria-hidden="true"></div>
   <div class="foot__row">
     <span class="ph">[ Название ]</span>
     <span>Полировка и шлифовка стекла</span>
     <a href="#top">Наверх ↑</a>
   </div>
+  <p class="credits">Фото: Unsplash (Unsplash License); текстуры мрамора: ambientCG (CC0). Все изображения временные.</p>
 </footer>
 
-<div class="mock-tag" id="mockTag">Макет · версия 1 <button type="button" aria-label="Скрыть метку">×</button></div>
+<div class="mock-tag" id="mockTag">Макет · версия 3 <button type="button" aria-label="Скрыть метку">×</button></div>
 
 <script src="main.js"></script>
 </body>
