@@ -78,9 +78,11 @@
   const heroArt = $('#heroArt');
   let autoP = reduce ? 0.55 : 0;           // проигрывается при загрузке
   let scrollP = 0;
+  let rubP = 0;                            // «протирание» курсором
   let sx = -60, sxTarget = -60;
   const applyPane = () => {
-    const p = Math.max(autoP, scrollP);
+    const p = Math.min(1, Math.max(autoP, scrollP) + rubP);
+    heroArt.classList.toggle('is-clean', p > 0.97);
     pane.style.setProperty('--p', p.toFixed(3));
   };
   if (!reduce) {
@@ -93,9 +95,17 @@
       if (k < 1) requestAnimationFrame(play);
     };
     requestAnimationFrame(play);
+    let lastX = null, lastY = null;
     heroArt.parentElement.addEventListener('pointermove', (e) => {
       const r = pane.getBoundingClientRect();
       sxTarget = clamp((e.clientX - r.left) / r.width, -0.3, 1.3) * 80 - 20;
+      // водят по самой статуе — стекло протирается: ~3 размашистых движения до чистого
+      const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (over && lastX !== null) {
+        rubP = Math.min(1, rubP + Math.hypot(e.clientX - lastX, e.clientY - lastY) / (r.width * 3));
+        applyPane();
+      }
+      lastX = e.clientX; lastY = e.clientY;
     });
     const follow = () => {
       sx += (sxTarget - sx) * 0.08;
@@ -176,8 +186,8 @@
       });
     }
 
-    // очистка стекла в герое: за первые ~70% высоты экрана
-    scrollP = clamp(y / (vh * 0.7));
+    // очистка стекла в герое: за первые ~30% высоты экрана, пока статуя ещё видна
+    scrollP = clamp(y / (vh * 0.3));
     applyPane();
 
     if (proc && !reduce) benchFrame(vh);
