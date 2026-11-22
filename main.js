@@ -9,24 +9,61 @@
   /* ---------- детерминированный генератор для царапин ---------- */
   const rng = (seed) => () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 
-  function scratches(svg, count, seed, w, h) {
+  function scratches(svg, count, seed, w, h, mode = 0) {
     const r = rng(seed);
     let out = '';
-    for (let i = 0; i < count; i++) {
-      const x = r() * w, y = r() * h;
-      const len = 40 + r() * w * 0.55;
-      const a = (r() - 0.5) * 1.1 + (r() > 0.6 ? 1.3 : 0.15);
-      const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
-      const bend = (r() - 0.5) * 40;
-      const op = 0.25 + r() * 0.6;
-      const sw = 0.5 + r() * 1.1;
-      const col = r() > 0.35 ? '255,255,255' : '40,70,80';
-      out += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}Q${((x + x2) / 2 + bend).toFixed(1)} ${((y + y2) / 2 - bend).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="rgba(${col},${op.toFixed(2)})" stroke-width="${sw.toFixed(2)}" fill="none" stroke-linecap="round"/>`;
+    if (mode === 1) {
+      // дуги от дворников и мелкие сколы на лобовом стекле
+      for (let s = 0; s < 2; s++) {
+        const cx = w * (0.28 + s * 0.44), cy = h * 1.18, R0 = h * 0.65;
+        const a0 = -Math.PI / 2 - 0.65, a1 = -Math.PI / 2 + 0.45;
+        for (let k = 0; k < 18; k++) {
+          const R = R0 + (r() - 0.5) * 90, b0 = a0 + r() * 0.25, b1 = a1 - r() * 0.25;
+          const x1 = cx + Math.cos(b0) * R, y1 = cy + Math.sin(b0) * R;
+          const x2 = cx + Math.cos(b1) * R, y2 = cy + Math.sin(b1) * R;
+          const op = (0.22 + r() * 0.48).toFixed(2), sw = (0.5 + r() * 0.9).toFixed(2);
+          out += `<path d="M${x1.toFixed(1)} ${y1.toFixed(1)} A${R.toFixed(1)} ${R.toFixed(1)} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="rgba(255,255,255,${op})" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`;
+        }
+      }
+      for (let i = 0; i < 24; i++) {
+        const cx = r() * w, cy = r() * h, rad = (0.7 + r() * 1.8).toFixed(1);
+        out += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${rad}" fill="rgba(255,255,255,${(0.35 + r() * 0.45).toFixed(2)})"/>`;
+      }
+    } else if (mode === 2) {
+      // вертикальные полосы от стеклоподъёмника и косые царапины на боковом стекле
+      for (let i = 0; i < Math.round(count * 0.55); i++) {
+        const x = w * (0.1 + r() * 0.8), y = r() * h * 0.45, y2 = y + 60 + r() * h * 0.45;
+        const op = (0.22 + r() * 0.45).toFixed(2), sw = (0.5 + r() * 0.9).toFixed(2);
+        out += `<path d="M${x.toFixed(1)} ${y.toFixed(1)} L${(x + (r() - 0.5) * 6).toFixed(1)} ${Math.min(h, y2).toFixed(1)}" stroke="rgba(255,255,255,${op})" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`;
+      }
+      for (let i = 0; i < Math.round(count * 0.45); i++) {
+        const x = r() * w, y = r() * h, len = 30 + r() * w * 0.38, a = (r() - 0.5) * 0.8 + 0.35;
+        const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len, bend = (r() - 0.5) * 24;
+        const col = r() > 0.35 ? '255,255,255' : '40,70,80';
+        out += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}Q${((x + x2) / 2 + bend).toFixed(1)} ${((y + y2) / 2 - bend).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="rgba(${col},${(0.25 + r() * 0.55).toFixed(2)})" stroke-width="${(0.5 + r()).toFixed(2)}" fill="none" stroke-linecap="round"/>`;
+      }
+    } else {
+      // диагональные следы пескоструя/абразива + пятна водного камня на стеклопакете
+      for (let i = 0; i < count; i++) {
+        const x = r() * w, y = r() * h;
+        const len = 40 + r() * w * 0.55;
+        const a = (r() - 0.5) * 1.1 + (r() > 0.6 ? 1.3 : 0.15);
+        const x2 = x + Math.cos(a) * len, y2 = y + Math.sin(a) * len;
+        const bend = (r() - 0.5) * 40;
+        const op = 0.25 + r() * 0.6;
+        const sw = 0.5 + r() * 1.1;
+        const col = r() > 0.35 ? '255,255,255' : '40,70,80';
+        out += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}Q${((x + x2) / 2 + bend).toFixed(1)} ${((y + y2) / 2 - bend).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}" stroke="rgba(${col},${op.toFixed(2)})" stroke-width="${sw.toFixed(2)}" fill="none" stroke-linecap="round"/>`;
+      }
+      for (let i = 0; i < 16; i++) {
+        const cx = r() * w, cy = r() * h, rad = (3 + r() * 10).toFixed(1);
+        out += `<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${rad}" fill="rgba(255,255,255,${(0.06 + r() * 0.08).toFixed(2)})" stroke="rgba(255,255,255,${(0.18 + r() * 0.22).toFixed(2)})" stroke-width="0.7"/>`;
+      }
     }
     svg.innerHTML = out;
   }
 
-  $$('.ba__scr').forEach((s, i) => scratches(s, 38 + i * 6, 777 + i * 91, 400, 260));
+  $$('.ba__scr').forEach((s, i) => scratches(s, 38 + i * 6, 777 + i * 91, 400, 260, i));
 
   /* ---------- появление при прокрутке ---------- */
   const revealEls = $$('[data-reveal]');
@@ -49,6 +86,7 @@
     revealEls.forEach((el) => io.observe(el));
     // запасной путь: если IntersectionObserver задержан (фоновая вкладка), проверяем вручную
     const sweep = () => {
+      if (revealEls.every((el) => el.classList.contains('in'))) { removeEventListener('scroll', sweep); return; }
       const vh = innerHeight;
       revealEls.forEach((el) => {
         if (el.classList.contains('in')) return;
@@ -60,55 +98,104 @@
     setTimeout(sweep, 300); setTimeout(sweep, 1200);
   }
 
+  root.dataset.ready = '1';   // скрытый до появления текст уже под присмотром скрипта
+
   /* ---------- шапка, меню ---------- */
   const top = $('#top'), burger = $('#burger'), nav = $('#nav');
+  const behindMenu = [$('main'), $('.foot'), $('.brand', top)];
   const setMenu = (open) => {
     nav.classList.toggle('open', open);
+    root.classList.toggle('menu-open', open);
     burger.setAttribute('aria-expanded', String(open));
+    behindMenu.forEach((el) => { el.inert = open; });
+    // меню становится видимым со следующим кадром — до этого фокус не встанет
+    if (open) setTimeout(() => { if (nav.classList.contains('open')) $('a', nav).focus({ preventScroll: true }); }, 60);
   };
   burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
   nav.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); burger.focus(); }
+  });
+  addEventListener('resize', () => { if (!matchMedia('(max-width: 820.98px)').matches && nav.classList.contains('open')) setMenu(false); });
 
-  /* ---------- щит: стекло очищается ---------- */
+  /* ---------- щит: стекло и мрамор полируются при скролле ---------- */
   const pane = $('#pane');
   const heroArt = $('#heroArt');
-  let autoP = reduce ? 0.55 : 0;           // проигрывается при загрузке
+  const heroBadge = $('#heroBadge');
+  const paneBar = $('#paneBar');
   let scrollP = 0;
-  let rubP = 0;                            // «протирание» курсором
-  let sx = -60, sxTarget = -60;
-  const applyPane = () => {
-    const p = Math.min(1, Math.max(autoP, scrollP) + rubP);
-    heroArt.classList.toggle('is-clean', p > 0.97);
-    pane.style.setProperty('--p', p.toFixed(3));
+  let currentP = reduce ? 1 : 0;
+  let hoverOffset = 0, hoverTarget = 0;
+  let animatingP = false, following = false, lastPaneT = 0;
+
+  const renderPane = () => {
+    heroArt.classList.toggle('is-clean', currentP > 0.97);
+    pane.style.setProperty('--p', currentP.toFixed(4));
+    heroArt.style.setProperty('--p', currentP.toFixed(4));
+    if (paneBar) paneBar.style.setProperty('--p', currentP.toFixed(4));
+    const sx = -32 + 164 * currentP + hoverOffset;
+    pane.style.setProperty('--sx', sx.toFixed(1) + '%');
+    if (heroBadge) {
+      heroBadge.textContent = currentP < 0.08
+        ? 'До полировки'
+        : currentP > 0.94
+          ? 'Зеркальная гладь'
+          : 'Полировка · ' + Math.round(currentP * 100) + '%';
+    }
   };
+
+  const stepPane = (t) => {
+    const dt = lastPaneT ? Math.min(64, t - lastPaneT) : 16;
+    lastPaneT = t;
+    const targetP = reduce ? 1 : scrollP;
+    const diff = targetP - currentP;
+    if (Math.abs(diff) < 0.0008) {
+      currentP = targetP;
+      animatingP = false;
+      lastPaneT = 0;
+    } else {
+      const step = diff * (1 - Math.exp(-dt / 480));
+      const maxStep = (dt / 1000) * 0.45;
+      currentP += Math.sign(step) * Math.min(Math.abs(step), maxStep);
+      requestAnimationFrame(stepPane);
+    }
+    renderPane();
+  };
+
+  const applyPane = () => {
+    if (reduce) {
+      currentP = 1;
+      renderPane();
+      return;
+    }
+    if (!animatingP) {
+      animatingP = true;
+      requestAnimationFrame(stepPane);
+    }
+  };
+
   if (!reduce) {
-    const t0 = performance.now();
-    const play = (t) => {
-      const k = clamp((t - t0 - 500) / 2200);
-      autoP = 0.5 * (1 - Math.pow(1 - k, 3));
-      sx = -60 + 130 * k; pane.style.setProperty('--sx', sx + '%');
-      applyPane();
-      if (k < 1) requestAnimationFrame(play);
-    };
-    requestAnimationFrame(play);
-    let lastX = null, lastY = null;
-    heroArt.parentElement.addEventListener('pointermove', (e) => {
-      const r = pane.getBoundingClientRect();
-      sxTarget = clamp((e.clientX - r.left) / r.width, -0.3, 1.3) * 80 - 20;
-      // водят по самой статуе — стекло протирается: ~3 размашистых движения до чистого
-      const over = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-      if (over && lastX !== null) {
-        rubP = Math.min(1, rubP + Math.hypot(e.clientX - lastX, e.clientY - lastY) / (r.width * 3));
-        applyPane();
-      }
-      lastX = e.clientX; lastY = e.clientY;
-    });
     const follow = () => {
-      sx += (sxTarget - sx) * 0.08;
-      if (autoP >= 0.5) pane.style.setProperty('--sx', sx.toFixed(1) + '%');
-      requestAnimationFrame(follow);
+      hoverOffset += (hoverTarget - hoverOffset) * 0.08;
+      following = Math.abs(hoverTarget - hoverOffset) > 0.05;
+      if (!following) hoverOffset = hoverTarget;
+      renderPane();
+      if (following) requestAnimationFrame(follow);
     };
-    setTimeout(() => { sxTarget = 30; follow(); }, 3000);
+    heroArt.parentElement.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = pane.getBoundingClientRect();
+      const nx = clamp((e.clientX - r.left) / r.width, 0, 1);
+      const ny = clamp((e.clientY - r.top) / r.height, 0, 1);
+      hoverTarget = (nx - 0.5) * 16;
+      pane.style.setProperty('--rx', ((0.5 - ny) * 4.4).toFixed(2) + 'deg');
+      pane.style.setProperty('--ry', ((nx - 0.5) * 4.4).toFixed(2) + 'deg');
+      if (!following) { following = true; requestAnimationFrame(follow); }
+    });
+    heroArt.parentElement.addEventListener('pointerleave', () => {
+      pane.style.setProperty('--rx', '0deg');
+      pane.style.setProperty('--ry', '0deg');
+    });
   }
 
   /* ---------- «Как работаем»: экран закреплён, прокрутка ведёт анимацию ---------- */
@@ -117,12 +204,29 @@
   const stepEls = $$('#steps .step');
   const phaseEl = $('#benchPhase');
   const barEl = $('#benchBar');
+  const pctEl = $('#benchPct');
   const grind = $('.tool--grind', bench);
   const polish = $('.tool--polish', bench);
   const phaseNames = ['I · Осмотр', 'II · Шлифовка', 'III · Полировка', 'IV · Контроль'];
   const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
   const tri = (x) => 1 - Math.abs(((x % 2) + 2) % 2 - 1);  // треугольная волна 0..1
   let curPhase = -1;
+
+  if (proc) {
+    stepEls.forEach((el, i) => {
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('role', 'button');
+      const go = () => {
+        const r = proc.getBoundingClientRect();
+        const span = r.height - innerHeight;
+        if (span <= 0) return;
+        const targetY = scrollY + r.top + ((i + 0.45) / 4) * span;
+        scrollTo({ top: targetY, behavior: reduce ? 'auto' : 'smooth' });
+      };
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
 
   // траектории кругов (доли ширины/высоты стекла): змейка, проходящая всё стекло до самых углов
   const AR = 1.25; // высота/ширина стекла 4:5
@@ -159,7 +263,7 @@
   const cvMatte = $('#benchMatte'), cvScr = $('#benchScr'), cvFx = $('#benchFx');
   let W = 0, H = 0, S = 1, ready = false;
   let scrBase, frostBase, brush, maskC;
-  const st = { P: -1, drawnP: -2, gOp: 0, pOp: 0, g: [0, 0], p: [0, 0] };
+  const st = { P: -1, drawnP: -2, gn: 0, pn: 0, fade: -1, gOp: 0, pOp: 0, g: [0, 0], p: [0, 0] };
 
   // мягкая кисть — отпечаток круга
   function makeBrush(r) {
@@ -274,7 +378,8 @@
     heroScr.replaceWith(hc);
     const paint = () => {
       const k = Math.min(2, devicePixelRatio || 1), w = Math.round(hc.clientWidth * k), h = Math.round(hc.clientHeight * k);
-      if (!w || !h) return;
+      if (!w || !h || (w === hc.dataset.w * 1 && h === hc.dataset.h * 1)) return;
+      hc.dataset.w = w; hc.dataset.h = h;
       hc.width = w; hc.height = h;
       hc.getContext('2d').drawImage(buildScratches(w, h, 12345), 0, 0);
     };
@@ -285,8 +390,27 @@
   /* матовое стекло после шлифовки: размытие, молочная плёнка, зерно, круговые риски */
   function buildFrost() {
     const c = mk(W, H), x = c.getContext('2d'), r = rng(99), u = Math.min(W, H) / 400;
-    x.filter = `blur(${Math.round(7 * u)}px) brightness(1.18) saturate(.5)`;
-    drawCover(x, benchImg, W, H); x.filter = 'none';
+    if (typeof x.filter === 'string') {
+      x.filter = `blur(${Math.round(7 * u)}px) brightness(1.18) saturate(.5)`;
+      drawCover(x, benchImg, W, H); x.filter = 'none';
+    } else {
+      // Safari до 18 не умеет filter на canvas: размываем ступенчатым уменьшением и обратным растяжением
+      let small = mk(W, H);
+      drawCover(small.getContext('2d'), benchImg, W, H);
+      const down = [];
+      while (small.width > W / Math.max(4, 14 * u) && small.width > 8 && small.height > 8) {
+        const next = mk(Math.ceil(small.width / 2), Math.ceil(small.height / 2));
+        next.getContext('2d').drawImage(small, 0, 0, next.width, next.height);
+        down.push([small.width, small.height]); small = next;
+      }
+      while (down.length) {
+        const next = mk(...down.pop());
+        next.getContext('2d').drawImage(small, 0, 0, next.width, next.height);
+        small = next;
+      }
+      x.drawImage(small, 0, 0);
+      x.fillStyle = 'rgba(255,255,255,.15)'; x.fillRect(0, 0, W, H);
+    }
     x.fillStyle = 'rgba(232,229,222,.52)'; x.fillRect(0, 0, W, H);
     x.fillStyle = x.createPattern(noiseTile(96, 70), 'repeat'); x.fillRect(0, 0, W, H);
     for (let i = 0; i < 520; i++) {
@@ -305,7 +429,7 @@
     g.addColorStop(0, '#3b3835'); g.addColorStop(1, '#141312'); disc(m - 2, g);
     if (kind === 'g') {
       // стальная тарелка с концентрической проточкой
-      g = x.createConicGradient(0.6, m, m);
+      g = x.createConicGradient ? x.createConicGradient(0.6, m, m) : x.createLinearGradient(0, 0, n, n);   // старый Safari
       [['#6d6b67', 0], ['#b9b6b0', 0.12], ['#5c5a56', 0.3], ['#a7a49e', 0.52], ['#4e4c49', 0.7], ['#b3b0aa', 0.86], ['#6d6b67', 1]].forEach(([c0, o]) => g.addColorStop(o, c0));
       disc(m - 10, g);
       x.save(); x.beginPath(); x.arc(m, m, m - 10, 0, 7); x.clip();
@@ -362,8 +486,10 @@
 
   function setupBench() {
     if (!benchPane.clientWidth || !benchImg.naturalWidth) return;
-    S = Math.min(2, devicePixelRatio || 1);
-    W = Math.round(benchPane.clientWidth * S); H = Math.round(benchPane.clientHeight * S);
+    const s = Math.min(2, devicePixelRatio || 1);
+    const w = Math.round(benchPane.clientWidth * s), h = Math.round(benchPane.clientHeight * s);
+    if (!h || (ready && w === W && h === H)) return;   // адресная строка телефона шлёт resize без смены размера стекла
+    S = s; W = w; H = h;
     [cvMatte, cvScr, cvFx].forEach((c) => { c.width = W; c.height = H; });
     scrBase = buildScratches(); frostBase = buildFrost();
     brush = makeBrush(Math.round(W * 0.2)); maskC = mk(W, H);
@@ -371,34 +497,47 @@
       $('i', grind).style.backgroundImage = `url(${toolTex('g')})`;
       $('i', polish).style.backgroundImage = `url(${toolTex('p')})`;
     }
-    ready = true; st.drawnP = -2; drawBench();
+    ready = true; st.drawnP = -2; st.gn = st.pn = -1; st.fade = -1; drawBench();
   }
 
-  // отпечатки кисти вдоль траектории 0..u
-  function stampPath(x, at, u) {
-    const steps = Math.ceil(u * 480), b = brush.width / 2;
-    for (let i = 0; i <= steps; i++) {
-      const [px, py] = at(Math.min(i / 480, u));
+  // отпечатки кисти вдоль траектории: только шаги from..to
+  const STEPS = 480;
+  const stamps = (u) => (u > 0 ? Math.floor(u * STEPS) + 1 : 0);
+  function stampPath(x, at, from, to) {
+    const b = brush.width / 2;
+    for (let i = from; i < to; i++) {
+      const [px, py] = at(i / STEPS);
       x.drawImage(brush, px * W - b, py * H - b);
     }
   }
 
+  // вперёд дорисовываем новые отпечатки; назад — перерисовываем только изменившийся слой
   function drawBench() {
     if (!ready || st.P === st.drawnP) return;
     const P = st.P; st.drawnP = P;
-    const u1 = clamp(P - 1), u2 = clamp(P - 2);
+    const gn = stamps(clamp(P - 1)), pn = stamps(clamp(P - 2)), fade = 1 - ss(2.75, 3.0, P);
+    const xs = cvScr.getContext('2d'), xk = maskC.getContext('2d');
+    const fresh = st.gn < 0;
+    let g0 = st.gn, p0 = st.pn;
+    if (fresh || gn < g0) {
+      xs.globalCompositeOperation = 'source-over'; xs.clearRect(0, 0, W, H); xs.drawImage(scrBase, 0, 0);
+      g0 = 0;
+    }
     // царапины снимаются шлифовальным кругом
-    const xs = cvScr.getContext('2d');
-    xs.globalCompositeOperation = 'source-over'; xs.clearRect(0, 0, W, H); xs.drawImage(scrBase, 0, 0);
-    if (u1 > 0) { xs.globalCompositeOperation = 'destination-out'; stampPath(xs, grindAt, u1); }
+    xs.globalCompositeOperation = 'destination-out'; stampPath(xs, grindAt, g0, gn);
     // матовость остаётся следом шлифовки и уходит под войлоком
-    const xm = cvMatte.getContext('2d'), xk = maskC.getContext('2d');
-    xm.globalCompositeOperation = 'source-over'; xm.globalAlpha = 1; xm.clearRect(0, 0, W, H);
-    const fade = 1 - ss(2.75, 3.0, P);
-    if (u1 > 0 && fade > 0) {
+    let mg = g0;
+    if (fresh || gn < st.gn || pn < p0) {
       xk.globalCompositeOperation = 'source-over'; xk.clearRect(0, 0, W, H);
-      stampPath(xk, grindAt, u1);
-      if (u2 > 0) { xk.globalCompositeOperation = 'destination-out'; stampPath(xk, polishAt, u2); }
+      mg = p0 = 0;
+    }
+    xk.globalCompositeOperation = 'source-over'; stampPath(xk, grindAt, mg, gn);
+    xk.globalCompositeOperation = 'destination-out'; stampPath(xk, polishAt, p0, pn);
+    if (!fresh && gn === st.gn && pn === st.pn && fade === st.fade) return;
+    st.gn = gn; st.pn = pn; st.fade = fade;
+    const xm = cvMatte.getContext('2d');
+    xm.globalCompositeOperation = 'source-over'; xm.globalAlpha = 1; xm.clearRect(0, 0, W, H);
+    if (gn && fade > 0) {
       xm.drawImage(maskC, 0, 0);
       xm.globalCompositeOperation = 'source-in'; xm.globalAlpha = fade; xm.drawImage(frostBase, 0, 0);
       xm.globalAlpha = 1;
@@ -407,9 +546,16 @@
 
   // частицы: пыль с водой от шлифовки, капли церия от войлока; круги крутятся всё время
   const parts = [];
-  let rotG = 0, rotP = 0, lastT = 0, inView = false;
+  const hotspots = [[0.34, 0.30], [0.60, 0.50], [0.44, 0.72]];
+  let rotG = 0, rotP = 0, lastT = 0, inView = false, fxRun = false;
+  const toolsShown = () => st.gOp > 0.01 || st.pOp > 0.01;
+  const stage1Active = () => st.P >= 0 && st.P < 1.05;
+  function startFx() {
+    if (fxRun || !inView || !(toolsShown() || stage1Active())) return;
+    fxRun = true; requestAnimationFrame(fxLoop);
+  }
   function fxLoop(t) {
-    if (!inView) { lastT = 0; return; }
+    if (!inView || !(toolsShown() || stage1Active() || parts.length)) { lastT = 0; fxRun = false; return; }
     const dt = lastT ? Math.min(0.05, (t - lastT) / 1000) : 0.016; lastT = t;
     rotG += dt * 1400; rotP += dt * 900;
     grind.style.setProperty('--rot', (rotG % 360).toFixed(0) + 'deg');
@@ -429,6 +575,38 @@
       };
       emit(st.gOp, st.g, 'g'); emit(st.pOp, st.p, 'p');
       x.clearRect(0, 0, W, H);
+      // I. осмотр: при прохождении бокового луча подсвечиваем ключевые очаги дефектов
+      if (stage1Active()) {
+        const beamCenter = -0.4 + 1.5 * clamp(st.P / 0.9) + 0.17;
+        const fadeOut = 1 - ss(0.88, 1.05, st.P);
+        hotspots.forEach(([hx, hy], idx) => {
+          const dist = Math.abs(hx - beamCenter);
+          const vis = clamp(1 - dist / 0.32) * fadeOut;
+          if (vis < 0.03) return;
+          const pulse = 0.5 + 0.5 * Math.sin(t * 0.005 + idx * 1.9);
+          const rad = (14 + pulse * 8) * S;
+          x.beginPath(); x.arc(hx * W, hy * H, rad, 0, 7);
+          x.lineWidth = 1.4 * S;
+          x.strokeStyle = `rgba(201, 164, 98, ${(vis * 0.72).toFixed(3)})`;
+          x.stroke();
+          x.beginPath(); x.arc(hx * W, hy * H, 2.5 * S, 0, 7);
+          x.fillStyle = `rgba(255, 246, 220, ${(vis * 0.9).toFixed(3)})`;
+          x.fill();
+        });
+      }
+      // II–III. мягкий мокрый ореол контакта / суспензии церия под активным кругом
+      const drawHalo = (op, [cx, cy], col) => {
+        if (op < 0.15) return;
+        const px = cx * W, py = cy * H, hr = R * 1.05;
+        const g = x.createRadialGradient(px, py, R * 0.55, px, py, hr);
+        g.addColorStop(0, `rgba(${col}, 0)`);
+        g.addColorStop(0.65, `rgba(${col}, ${(0.22 * op).toFixed(3)})`);
+        g.addColorStop(1, `rgba(${col}, 0)`);
+        x.fillStyle = g;
+        x.beginPath(); x.arc(px, py, hr, 0, 7); x.fill();
+      };
+      drawHalo(st.gOp, st.g, '226, 224, 216');
+      drawHalo(st.pOp, st.p, '240, 212, 198');
       for (let i = parts.length - 1; i >= 0; i--) {
         const q = parts[i]; q.life += dt;
         if (q.life > q.max) { parts.splice(i, 1); continue; }
@@ -452,8 +630,8 @@
     if (benchImg.complete && benchImg.naturalWidth) setupBench(); else benchImg.addEventListener('load', setupBench, { once: true });
     let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (ready) setupBench(); }, 250); });
     new IntersectionObserver((es) => {
-      const was = inView; inView = es[0].isIntersecting;
-      if (inView && !was) requestAnimationFrame(fxLoop);
+      inView = es[es.length - 1].isIntersecting;
+      startFx();
     }).observe(proc);
   }
 
@@ -499,44 +677,70 @@
     s.setProperty('--ok', ss(3.45, 3.75, P).toFixed(3));
     s.setProperty('--clean', ss(2.9, 3.4, P).toFixed(3));
     barEl.style.setProperty('--bp', (P / 4).toFixed(4));
+    if (pctEl) pctEl.textContent = Math.round(clamp(P / 4) * 100) + '%';
     st.P = Math.round(P * 400) / 400;
     drawBench();
+    startFx();
 
     const ph = Math.min(3, Math.floor(P));
+    stepEls.forEach((el, i) => {
+      el.classList.toggle('is-on', i === ph);
+      el.classList.toggle('is-done', i < ph);
+      el.style.setProperty('--sp', clamp(P - i).toFixed(3));
+    });
     if (ph !== curPhase) {
       curPhase = ph;
       phaseEl.textContent = phaseNames[ph];
-      stepEls.forEach((el, i) => el.classList.toggle('is-on', i === ph));
     }
   }
 
   let ticking = false;
+  const progressEl = $('.progress'), mythEl = $('.myth'), contactEl = $('.contact');
+  const meanders = $$('.meander'), mirrorArch = $('#mirrorArch'), heroMirror = $('#heroMirror');
 
   function frame() {
     ticking = false;
+    // сначала все замеры, потом запись стилей
     const y = window.scrollY;
     const vh = window.innerHeight;
-    const docH = document.documentElement.scrollHeight - vh;
+    const docH = root.scrollHeight - vh;
+    const mythY = reduce ? 0 : mythEl.getBoundingClientRect().top;
+    const contactY = reduce ? 0 : contactEl.getBoundingClientRect().top;
+    if (proc && !reduce) benchFrame(vh);
 
     top.classList.toggle('is-stuck', y > 20);
-    root.style.setProperty('--prog', docH > 0 ? (y / docH).toFixed(4) : 0);
+    progressEl.style.setProperty('--prog', docH > 0 ? (y / docH).toFixed(4) : 0);
 
     if (!reduce) {
       // мрамор плывёт медленнее контента
-      root.style.setProperty('--bgy', (-y * 0.06).toFixed(1) + 'px');
-      ['.myth', '.process', '.contact'].forEach((sel, i) => {
-        const el = $(sel);
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        el.style.setProperty(['--bgy2', '--bgy3', '--bgy4'][i], (-r.top * 0.08).toFixed(1) + 'px');
-      });
+      mythEl.style.setProperty('--bgy2', (-mythY * 0.05).toFixed(1) + 'px');
+      contactEl.style.setProperty('--bgy4', (-contactY * 0.08).toFixed(1) + 'px');
+      meanders.forEach((m, i) => m.style.setProperty('--mx', ((i % 2 ? -1 : 1) * y * 0.15).toFixed(1) + 'px'));
+      if (mirrorArch) mirrorArch.style.setProperty('--sx', (-30 + 150 * clamp(y / (vh * 0.55))).toFixed(1) + '%');
+      if (heroMirror) {
+        let mc = 0;
+        if (window.innerWidth > 960) {
+          mc = clamp((y - 10) / (vh * 0.36));
+        } else {
+          const hmr = heroMirror.getBoundingClientRect();
+          mc = y <= 8 ? 0 : clamp((vh * 0.48 - hmr.top) / (vh * 0.36));
+        }
+        heroMirror.style.setProperty('--mc', mc.toFixed(3));
+      }
     }
 
-    // очистка стекла в герое: за первые ~30% высоты экрана, пока статуя ещё видна
-    scrollP = clamp(y / (vh * 0.3));
+    // полировка мрамора в закреплённой секции «Мрамор и стекло» (#mif)
+    const mr = mythEl.getBoundingClientRect();
+    const mSpan = mr.height - vh;
+    let rawP = 0;
+    if (mSpan > 20) {
+      rawP = clamp((-mr.top - mSpan * 0.1) / (mSpan * 0.76));
+    } else {
+      const pr = pane.getBoundingClientRect();
+      rawP = y <= 8 ? 0 : clamp((vh * 0.64 - pr.top) / (vh * 0.50));
+    }
+    scrollP = rawP * rawP * (3 - 2 * rawP);
     applyPane();
-
-    if (proc && !reduce) benchFrame(vh);
   }
   const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
   addEventListener('scroll', onScroll, { passive: true });
@@ -548,7 +752,9 @@
     const stage = $('.ba__stage', fig);
     const range = $('.ba__range', fig);
     const set = (v) => stage.style.setProperty('--pos', v + '%');
-    range.addEventListener('input', () => set(range.value));
+    let touched = false;   // человек взялся за ползунок — подсказка больше не вмешивается
+    range.addEventListener('pointerdown', () => { touched = true; });
+    range.addEventListener('input', () => { touched = true; set(range.value); });
     set(range.value);
     if (reduce || !('IntersectionObserver' in window)) return;
     // один раз показываем, что ползунок двигается
@@ -559,7 +765,8 @@
       const run = (t) => {
         const k = clamp((t - t0) / 1800);
         const v = 50 + Math.sin(k * Math.PI * 2) * 28 * (1 - k * 0.2);
-        if (document.activeElement !== range) { set(v.toFixed(1)); range.value = v; }
+        if (touched || document.activeElement === range) return;
+        set(v.toFixed(1)); range.value = v;
         if (k < 1) requestAnimationFrame(run); else { set(50); range.value = 50; }
       };
       setTimeout(() => requestAnimationFrame(run), 500);

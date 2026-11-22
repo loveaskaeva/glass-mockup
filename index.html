@@ -10,8 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/myth.webp">
 <link rel="preload" as="image" href="img/hero.webp">
-<link rel="stylesheet" href="style.css?v=11">
+<link rel="preload" as="image" href="img/hero-polished.webp">
+<link rel="stylesheet" href="style.css?v=20">
 <script>document.documentElement.classList.add('js')</script>
 </head>
 <body>
@@ -50,31 +52,39 @@
     </div>
   </div>
 
-  <figure class="hero__art" id="heroArt">
-    <div class="arch" id="pane">
-      <img class="arch__img" src="img/hero.webp" alt="Мраморный женский портрет, античная скульптура" width="1100" height="1500">
-      <img class="arch__fog" src="img/hero.webp" alt="" aria-hidden="true" width="1100" height="1500">
-      <svg class="arch__scr" id="scratches" viewBox="0 0 400 520" preserveAspectRatio="none" aria-hidden="true"></svg>
+  <figure class="hero__art" id="heroMirror">
+    <div class="arch" id="mirrorArch">
+      <img src="img/myth.webp" alt="«Персей с головой Медузы», Антонио Канова, мрамор" width="900" height="1200">
       <span class="arch__shine" aria-hidden="true"></span>
     </div>
-    <figcaption class="art-cap"><span>Мрамор и стекло</span> Обоим возвращает жизнь одно и то же: полировка</figcaption>
+    <figcaption class="art-cap" id="mirrorCap"><span>Миф о щите</span> Персей одолел Медузу, глядя на&nbsp;её&nbsp;отражение в&nbsp;щите, начищенном до&nbsp;зеркального блеска</figcaption>
   </figure>
 </section>
 
 <div class="meander" aria-hidden="true"></div>
 
-<!-- ============ МИФ ============ -->
+<!-- ============ МРАМОР И СТЕКЛО ============ -->
 <section class="myth" id="mif">
-  <div class="myth__inner">
-    <figure class="myth__img" data-reveal>
-      <div class="arch arch--sm"><img src="img/myth.webp" alt="«Персей с головой Медузы», Антонио Канова, мрамор" loading="lazy" width="900" height="1200"></div>
-    </figure>
-    <div class="myth__text">
-      <p class="eyebrow eyebrow--gold" data-reveal>Миф о щите</p>
-      <blockquote data-reveal="unveil">
-        <p>Персей одолел Медузу, глядя на&nbsp;её&nbsp;отражение в&nbsp;щите, начищенном до&nbsp;зеркального блеска.</p>
-      </blockquote>
-      <p class="myth__body" data-reveal>Зеркальная поверхность ничего не скрывает. Так же мы работаем со&nbsp;стеклом: убираем всё, что мешает ему быть чистым и&nbsp;ровным, — от&nbsp;тонкой паутинки царапин до&nbsp;глубоких следов щёток и&nbsp;абразива.</p>
+  <div class="myth__pin">
+    <div class="myth__inner">
+      <figure class="myth__img hero__art" id="heroArt" data-reveal>
+        <div class="arch" id="pane">
+          <img class="arch__img" src="img/hero.webp" alt="Мраморный женский портрет, античная скульптура" width="1100" height="1500">
+          <img class="arch__polished" src="img/hero-polished.webp" alt="" aria-hidden="true" width="1100" height="1500">
+          <img class="arch__fog" src="img/hero.webp" alt="" aria-hidden="true" width="1100" height="1500">
+          <svg class="arch__scr" id="scratches" viewBox="0 0 400 520" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <span class="arch__shine" aria-hidden="true"></span>
+          <span class="arch__badge" id="heroBadge" aria-hidden="true">До полировки</span>
+        </div>
+        <div class="pane-bar" aria-hidden="true"><i id="paneBar"></i></div>
+      </figure>
+      <div class="myth__text">
+        <p class="eyebrow eyebrow--gold" data-reveal>Мрамор и стекло</p>
+        <blockquote data-reveal="unveil">
+          <p>Обоим возвращает жизнь одно и&nbsp;то&nbsp;же: полировка.</p>
+        </blockquote>
+        <p class="myth__body" data-reveal>Зеркальная поверхность ничего не скрывает. Так же мы работаем со&nbsp;стеклом: убираем всё, что мешает ему быть чистым и&nbsp;ровным, — от&nbsp;тонкой паутинки царапин до&nbsp;глубоких следов щёток и&nbsp;абразива.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -108,12 +118,12 @@
 <section class="services" id="uslugi">
   <header class="sec-head">
     <p class="eyebrow" data-reveal>Что мы делаем</p>
-    <h2 data-reveal="unveil">Ремесло в&nbsp;четырёх действиях</h2>
+    <h2 data-reveal="unveil">Ремесло в&nbsp;пяти действиях</h2>
   </header>
   <ol class="rows">
     <li class="row" data-reveal>
       <span class="row__n">I</span>
-      <div class="row__body"><h3>Удаление царапин</h3><p>Окна, витрины, перегородки, стеклянные двери. Убираем следы от чистки, песка, колец и ключей, не меняя стекло.</p></div>
+      <div class="row__body"><h3>Удаление царапин</h3><p>Окна, витрины, перегородки, стеклянные двери. Убираем следы от чистки, пескоструя, колец и ключей, не меняя стекло.</p></div>
     </li>
     <li class="row" data-reveal>
       <span class="row__n">II</span>
@@ -127,8 +137,11 @@
       <span class="row__n">IV</span>
       <div class="row__body"><h3>Восстановление после налёта</h3><p>Известковый налёт, водный камень, «радужные» разводы, коррозия стекла на старых окнах и душевых кабинах.</p></div>
     </li>
+    <li class="row" data-reveal><span class="row__n">V</span><div class="row__body"><h3>Шлифовка и полировка металла</h3><p>Нержавеющая сталь, латунь, алюминий, фурнитура и элементы интерьера. Убираем царапины, потёртости и окислы, выводим в сатин или зеркальный блеск.</p></div></li>
   </ol>
 </section>
+
+<div class="meander" aria-hidden="true"></div>
 
 <!-- ============ ПРОЦЕСС ============ -->
 <section class="process" id="process">
@@ -161,6 +174,7 @@
         <div class="bench__hud">
           <span class="bench__phase" id="benchPhase">I · Осмотр</span>
           <span class="bench__bar"><i id="benchBar"></i></span>
+          <span class="bench__pct" id="benchPct">0%</span>
         </div>
       </div>
     </div>
@@ -253,11 +267,11 @@
   <div class="foot__row">
     <span class="ph">[ Название ]</span>
     <span>Полировка и шлифовка стекла</span>
-    <a href="#top">Наверх ↑</a>
+    <a href="#hero">Наверх ↑</a>
   </div>
 </footer>
 
 
-<script src="main.js?v=11"></script>
+<script src="main.js?v=20" onerror="document.documentElement.classList.remove('js')" onload="if(!document.documentElement.dataset.ready)document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
