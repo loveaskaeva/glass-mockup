@@ -567,7 +567,4 @@
     hint.observe(fig);
   });
 
-  /* ---------- метка «макет» ---------- */
-  const tag = $('#mockTag');
-  $('button', tag).addEventListener('click', () => { tag.hidden = true; });
 })();
