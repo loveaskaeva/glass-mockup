@@ -58,7 +58,6 @@
       <span class="arch__shine" aria-hidden="true"></span>
     </div>
     <figcaption class="art-cap"><span>Мрамор и стекло</span> Обоим возвращает жизнь одно и то же: полировка</figcaption>
-    <p class="hint" aria-hidden="true">проведите по стеклу курсором</p>
   </figure>
 </section>
 
@@ -73,9 +72,9 @@
     <div class="myth__text">
       <p class="eyebrow eyebrow--gold" data-reveal>Миф о щите</p>
       <blockquote data-reveal="unveil">
-        <p>Персей победил Медузу, потому что смотрел в&nbsp;поверхность, отполированную до&nbsp;зеркала.</p>
+        <p>Персей одолел Медузу, глядя на&nbsp;её&nbsp;отражение в&nbsp;щите, начищенном до&nbsp;зеркального блеска.</p>
       </blockquote>
-      <p class="myth__body" data-reveal>Гладкая поверхность видит больше, чем кажется. Мы относимся к стеклу так же: исправляем всё, что мешает ему быть чистым и ровным, от тонкой паутины царапин до глубоких следов от щёток и абразива.</p>
+      <p class="myth__body" data-reveal>Зеркальная поверхность ничего не скрывает. Так же мы работаем со&nbsp;стеклом: убираем всё, что мешает ему быть чистым и&nbsp;ровным, — от&nbsp;тонкой паутинки царапин до&nbsp;глубоких следов щёток и&nbsp;абразива.</p>
     </div>
   </div>
 </section>
@@ -149,10 +148,12 @@
 
       <div class="bench" id="bench" aria-hidden="true">
         <div class="bench__pane">
-          <img class="bench__view" src="img/columns.webp" alt="" loading="lazy" width="1600" height="1067">
-          <div class="bench__haze"></div>
-          <svg class="bench__scr" id="benchScr" viewBox="0 0 400 500" preserveAspectRatio="none"></svg>
+          <img class="bench__view" src="img/columns.webp" alt="" width="1600" height="1067">
+          <canvas class="bench__matte" id="benchMatte"></canvas>
+          <canvas class="bench__scr" id="benchScr"></canvas>
           <div class="bench__light"></div>
+          <canvas class="bench__fx" id="benchFx"></canvas>
+          <div class="bench__glass"></div>
           <div class="bench__shine"></div>
           <div class="tool tool--grind"><i></i></div>
           <div class="tool tool--polish"><i></i></div>
@@ -255,7 +256,6 @@
     <span>Полировка и шлифовка стекла</span>
     <a href="#top">Наверх ↑</a>
   </div>
-  <p class="credits">Фото: Unsplash (Unsplash License); текстуры мрамора: ambientCG (CC0). Все изображения временные.</p>
 </footer>
 
 <div class="mock-tag" id="mockTag">Макет · версия 9<button type="button" aria-label="Скрыть метку">×</button></div>
