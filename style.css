@@ -408,6 +408,36 @@ p { margin: 0; }
   .contact__list a, .contact__addr { flex-direction: column; gap: 6px; }
   .contact__list b { text-align: left; font-size: 20px; }
 }
+/* «Как работаем» на телефоне: всё в один экран под шапкой —
+   заголовок, стекло на всю ширину, ряд из четырёх шагов, текст текущего шага */
+@media (max-width: 760px) {
+  .process__pin { align-items: stretch; }
+  .process__inner {
+    display: flex; flex-direction: column; justify-content: center; gap: 0;
+    padding: 80px var(--pad) 18px; height: 100%; box-sizing: border-box;
+  }
+  .process__text { display: contents; }
+  .process__text .eyebrow { order: -2; margin: 0 0 14px; }
+  .bench { order: -1; width: 100%; flex: 0 1 auto; min-height: 0; display: flex; flex-direction: column; }
+  .bench__pane { aspect-ratio: 4 / 3.4; max-height: 40svh; width: 100%; border-width: 6px; outline-offset: 3px; }
+  .bench__hud { margin-top: 10px; }
+  .bench__phase { display: none; }
+  .steps {
+    position: relative; grid-template-columns: repeat(4, 1fr); gap: 4px; max-width: none; width: 100%; align-self: stretch;
+    margin-top: 14px; padding-bottom: 7em; border-top: 0;
+  }
+  .step { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 6px 0 0; border: 0; opacity: .45; text-align: center; }
+  .step > div { display: contents; }
+  .step__n { width: 32px; height: 32px; font-size: 14px; }
+  .step h3 { font-size: 12.5px; margin: 0; }
+  /* описание — под всем рядом, на всю ширину */
+  .step p {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 6.4em; max-height: none; margin: 0;
+    font-size: 14px; line-height: 1.55; text-align: left; opacity: 0; transform: translateY(6px);
+    transition: opacity .45s var(--ease), transform .45s var(--ease);
+  }
+  .step.is-on p { max-height: none; margin: 0; opacity: 1; transform: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
